@@ -34,11 +34,12 @@
                 android:paddingBottom="5dp">
 
                 <ToggleButton
-                    android:id="@+id/toggleButton"
+                    android:id="@+id/editToggleButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ToggleButton" />
+                    android:text="ToggleButton"
+                    android:background="@drawable/toggle_button_custom"/>
 
                 <Space
                     android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/saveButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -59,6 +60,7 @@
                 android:paddingBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/subjectInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Subject" />
@@ -67,10 +69,11 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Memo">
+                android:hint="Memo"
+                android:paddingBottom="10dp">
 
                 <EditText
-                    android:id="@+id/editTextTextMultiLine"
+                    android:id="@+id/memoInput"
                     android:layout_width="match_parent"
                     android:layout_height="248dp"
                     android:ems="10"
@@ -79,10 +82,149 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/dateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date" />
+                android:text="Select Date" />
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"
+                android:text="Date Selected"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingRight="60dp">
+
+                    <Button
+                        android:id="@+id/lowPriorityButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/system_green"
+                        android:text="Low" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:tint="@color/system_green"
+                            app:srcCompat="@drawable/filled_dot" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/circle_outline" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/circle_outline" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingRight="45dp">
+
+                    <Button
+                        android:id="@+id/mediumPriorityButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/system_yellow"
+                        android:text="Medium" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingLeft="15dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/filled_dot"
+                            app:tint="@color/system_yellow" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/filled_dot"
+                            app:tint="@color/system_yellow" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/circle_outline" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/highPriorityButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/system_red"
+                        android:text="High" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:paddingLeft="9dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/filled_dot"
+                            app:tint="@color/system_red" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/filled_dot"
+                            app:tint="@color/system_red" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/filled_dot"
+                            app:tint="@color/system_red" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
