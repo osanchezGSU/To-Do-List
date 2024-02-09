@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/list_activity"
+        android:icon="@drawable/list_ic"
+        android:title="List" />
+    <item
+        android:id="@+id/calendar_activity"
+        android:icon="@drawable/calendar_ic"
+        android:title="Calendar"/>
+    <item
+        android:id="@+id/settings_activity"
+        android:icon="@drawable/settings_ic"
+        android:title="Settings"/>
+</menu>
