@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-
+import java.util.Calendar;
 import java.util.ArrayList;
 
 public class ToDoDataSource {
@@ -27,12 +27,12 @@ public class ToDoDataSource {
     public boolean insertMemo(Memo c) {
         boolean didSucceed = false;
         try {
-            ContentValues initailValues = new ContentValues();
-            initailValues.put("subjectInput", c.getSubjectInput());
-            initailValues.put("memoInput", c.getMemoInput());
-            initailValues.put("date", c.getDate());
-            initailValues.put("criticality", c.getCriticality());
-            didSucceed = database.insert("memo", null, initailValues) > 0;
+            ContentValues initialValues = new ContentValues();
+            initialValues.put("subjectInput", c.getSubjectInput());
+            initialValues.put("memoInput", c.getMemoInput());
+            initialValues.put("date", c.getDate());
+            initialValues.put("criticality", c.getCriticality());
+            didSucceed = database.insert("memo", null, initialValues) > 0;
 
         } catch (Exception e) {
             //do nothing here
