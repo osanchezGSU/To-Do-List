@@ -1,20 +1,32 @@
 package com.example.to_dolist;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.example.to_dolist.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.Calendar;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.SaveDateListener {
+
+    private Memo currentMemo;
 
 
     @Override
@@ -22,15 +34,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initNavBar();
+        initToggleButton();
+        initSaveButton();
+        setForEditing(false);
+        currentMemo = new Memo();
+        initChangeDateButton();
         Button lowPriority = findViewById(R.id.lowPriorityButton);
         Button mediumPriority = findViewById(R.id.mediumPriorityButton);
         Button highPriority = findViewById(R.id.highPriorityButton);
+
 
         lowPriority.setOnClickListener(this);
 
         mediumPriority.setOnClickListener(this);
 
         highPriority.setOnClickListener(this);
+        initTextChangeEvents();
+
     }
     private void initNavBar() {
         BottomNavigationView navBar = findViewById(R.id.navigation_bar);
@@ -76,20 +96,152 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             secondDot.setImageResource(R.drawable.circle_outline);
             thirdDot.setImageResource(R.drawable.circle_outline);
             linearLayout.setVisibility(View.VISIBLE);
+            System.out.println("Low Priority Button Pressed");
+            currentMemo.setCriticality("low");
         }
         else if (v.getId() == R.id.mediumPriorityButton){
             firstDot.setImageResource(R.drawable.medium_priority);
             secondDot.setImageResource(R.drawable.medium_priority);
             thirdDot.setImageResource(R.drawable.circle_outline);
             linearLayout.setVisibility(View.VISIBLE);
-
+            currentMemo.setCriticality("medium");
         }
         else if (v.getId() == R.id.highPriorityButton){
             firstDot.setImageResource(R.drawable.high_priority);
             secondDot.setImageResource(R.drawable.high_priority);
             thirdDot.setImageResource(R.drawable.high_priority);
             linearLayout.setVisibility(View.VISIBLE);
-
+            currentMemo.setCriticality("high");
         }
+
+    }
+    private void initToggleButton() {
+        final ToggleButton editToggle = findViewById(R.id.editToggleButton);
+        editToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setForEditing(editToggle.isChecked());
+            }
+        });
+    }
+    private void setForEditing(boolean isEnabled) {
+        EditText editSubject = findViewById(R.id.subjectInput);
+        EditText editMemo = findViewById(R.id.memoInput);
+        Button buttonDateDialog = findViewById(R.id.dateButton);
+        Button buttonSave = findViewById(R.id.saveButton);
+        Button lowPriority = findViewById(R.id.lowPriorityButton);
+        Button mediumPriority = findViewById(R.id.mediumPriorityButton);
+        Button highPriority = findViewById(R.id.highPriorityButton);
+
+        editSubject.setEnabled(isEnabled);
+        editMemo.setEnabled(isEnabled);
+        buttonDateDialog.setEnabled(isEnabled);
+        lowPriority.setEnabled(isEnabled);
+        mediumPriority.setEnabled(isEnabled);
+        highPriority.setEnabled(isEnabled);
+        buttonSave.setEnabled(isEnabled);
+
+
+        if (isEnabled) {
+            editSubject.requestFocus();
+        }
+    }
+
+    private void initChangeDateButton() {
+        Button changeDate = findViewById(R.id.dateButton);
+        changeDate.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                DatePickerDialog datePickerDialog = new DatePickerDialog();
+
+                datePickerDialog.show(fm, "DatePick");
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+    }
+
+    @Override
+    public void didFinishDatePickerDialog(Calendar selectedTime) {
+        TextView birthday = findViewById(R.id.dateTextView);
+        birthday.setText(DateFormat.format("MM/dd/yyyy", selectedTime));
+        currentMemo.setDate(selectedTime);
+
+    }
+    public void initTextChangeEvents(){
+      final EditText editSubject = findViewById(R.id.subjectInput);
+
+      editSubject.addTextChangedListener(new TextWatcher() {
+          @Override
+          public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+          }
+
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+          }
+
+          @Override
+          public void afterTextChanged(Editable s) {
+              currentMemo.setSubjectInput(editSubject.getText().toString());
+
+          }
+      });
+
+      final EditText editMemo = findViewById(R.id.memoInput);
+      editMemo.addTextChangedListener(new TextWatcher() {
+          @Override
+          public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+          }
+
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+          }
+
+          @Override
+          public void afterTextChanged(Editable s) {
+            currentMemo.setMemoInput(editMemo.getText().toString());
+          }
+      });
+
+    }
+
+    private void initSaveButton() {
+        Button saveButton = findViewById(R.id.saveButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Button Pressed", Toast.LENGTH_LONG).show();
+                boolean wasSuccessful;
+                ToDoDataSource ds = new ToDoDataSource(MainActivity.this);
+                try {
+                    ds.open();
+                    if (currentMemo.getId() == -1) {
+                        wasSuccessful = ds.insertMemo(currentMemo);
+                    }
+                    else {
+                        wasSuccessful = ds.updateMemo(currentMemo);
+                    }
+                    ds.close();
+                }
+                catch (Exception e) {
+                    wasSuccessful = false;
+                }
+                if (wasSuccessful) {
+                    ToggleButton editToggle = findViewById(R.id.editToggleButton);
+                    editToggle.toggle();
+                    setForEditing(false);
+                }
+            }
+        });
     }
 }

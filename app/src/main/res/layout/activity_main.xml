@@ -126,7 +126,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:paddingBottom="20dp"
-                android:text="Date Selected"
                 android:textAlignment="center" />
 
             <LinearLayout

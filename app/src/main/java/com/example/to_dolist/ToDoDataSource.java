@@ -30,7 +30,7 @@ public class ToDoDataSource {
             ContentValues initialValues = new ContentValues();
             initialValues.put("subjectInput", c.getSubjectInput());
             initialValues.put("memoInput", c.getMemoInput());
-            initialValues.put("date", c.getDate());
+            initialValues.put("date", String.valueOf(c.getDate().getTimeInMillis()));
             initialValues.put("criticality", c.getCriticality());
             didSucceed = database.insert("memo", null, initialValues) > 0;
 
@@ -46,7 +46,7 @@ public class ToDoDataSource {
             ContentValues updateValues = new ContentValues();
             updateValues.put("subjectInput", c.getSubjectInput());
             updateValues.put("memoInput", c.getMemoInput());
-            updateValues.put("date", c.getDate());
+            updateValues.put("date", String.valueOf(c.getDate().getTimeInMillis()));
             updateValues.put("criticality", c.getCriticality());
             didSucceed = database.update("memo", updateValues, "_id=" +rowId,
                     null)>0;
@@ -82,7 +82,9 @@ public class ToDoDataSource {
                 newMemo.setId(cursor.getInt(0));
                 newMemo.setSubjectInput(cursor.getString(1));
                 newMemo.setMemoInput(cursor.getString(2));
-                newMemo.setDate(cursor.getString(3));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
+                newMemo.setDate(calendar);
                 newMemo.setCriticality(cursor.getString(4));
                 memos.add(newMemo);
                 cursor.moveToNext();
@@ -103,7 +105,9 @@ public class ToDoDataSource {
             memo.setId(cursor.getInt(0));
             memo.setSubjectInput(cursor.getString(1));
             memo.setMemoInput(cursor.getString(2));
-            memo.setDate(cursor.getString(3));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
+            memo.setDate(calendar);
             memo.setCriticality(cursor.getString(4));
 
             cursor.close();

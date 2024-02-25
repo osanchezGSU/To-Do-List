@@ -1,14 +1,69 @@
 package com.example.to_dolist;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
 
-public class DatePickerDialog extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
+
+import java.util.Calendar;
+
+public class DatePickerDialog extends DialogFragment {
+
+    Calendar selectedDate;
+
+    public interface SaveDateListener{
+        void onRequestPermissionResult(int requestCode,
+                                       @NonNull String permissions[], @NonNull int[] grantResults);
+
+        void didFinishDatePickerDialog(Calendar selectedTime);
+    }
+
+    public DatePickerDialog(){
+
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_date_picker_dialog);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle saveInstanceState){
+        final View view = inflater.inflate(R.layout.calendar_date_picker, container);
+
+        getDialog().setTitle("Select Date");
+        selectedDate = Calendar.getInstance();
+
+        final CalendarView cv = view.findViewById(R.id.calendarView);
+
+
+        cv.setMinDate(System.currentTimeMillis() - 1000);
+        cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                selectedDate.set(year, month, day);
+
+            }
+        });
+
+        Button saveButton = view.findViewById(R.id.selectButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveItem(selectedDate);
+            }
+        });
+
+        return view;
     }
+
+    private void saveItem(Calendar selectedTime) {
+        SaveDateListener activity = (SaveDateListener) getActivity();
+        activity.didFinishDatePickerDialog(selectedTime);
+        getDialog().dismiss();
+    }
+
 }

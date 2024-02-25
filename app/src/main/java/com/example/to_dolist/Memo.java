@@ -1,11 +1,22 @@
 package com.example.to_dolist;
 
+import java.util.Calendar;
+
 public class Memo {
+
+
     private long id;
     private String subjectInput;
     private String memoInput;
-    private String date;
+    private Calendar date;
     private String criticality;
+
+    public Memo(){
+        id = -1;
+        date =  Calendar.getInstance();
+
+
+    }
 
     public long getId() {
         return id;
@@ -31,11 +42,11 @@ public class Memo {
         this.memoInput = memoInput;
     }
 
-    public String getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
