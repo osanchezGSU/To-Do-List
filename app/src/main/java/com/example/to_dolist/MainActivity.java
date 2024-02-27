@@ -35,7 +35,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initToggleButton();
         initSaveButton();
         setForEditing(false);
-        currentMemo = new Memo();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            initMemo(extras.getInt("Id"));
+        }
+        else {
+
+            currentMemo = new Memo();
+        }
         initChangeDateButton();
         Button lowPriority = findViewById(R.id.lowPriorityButton);
         Button mediumPriority = findViewById(R.id.mediumPriorityButton);
@@ -50,6 +58,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initTextChangeEvents();
 
     }
+
+    private void initMemo(int id) {
+            ToDoDataSource ds = new ToDoDataSource(MainActivity.this);
+        try {
+            ds.open();
+            currentMemo = ds.getSpecificMemo(id);
+            ds.close();
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Load Contact Failed", Toast.LENGTH_LONG).show();
+        }
+        Integer criticality = currentMemo.getCriticality();
+        Calendar unformattedDate = currentMemo.getDate();
+
+        LinearLayout linearLayout = findViewById(R.id.criticality_layout);
+        ImageView firstDot = findViewById(R.id.firstDot);
+        ImageView secondDot = findViewById(R.id.secondDot);
+        ImageView thirdDot = findViewById(R.id.thirdDot);
+        EditText editSubject = findViewById(R.id.subjectInput);
+        EditText editMemo = findViewById(R.id.memoInput);
+        TextView date = findViewById(R.id.dateTextView);
+
+        if (criticality == 1){
+            firstDot.setImageResource(R.drawable.low_priority);
+            secondDot.setImageResource(R.drawable.circle_outline);
+            thirdDot.setImageResource(R.drawable.circle_outline);
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+        else if (criticality == 2){
+            firstDot.setImageResource(R.drawable.medium_priority);
+            secondDot.setImageResource(R.drawable.medium_priority);
+            thirdDot.setImageResource(R.drawable.circle_outline);
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+        else if (criticality == 3){
+            firstDot.setImageResource(R.drawable.high_priority);
+            secondDot.setImageResource(R.drawable.high_priority);
+            thirdDot.setImageResource(R.drawable.high_priority);
+            linearLayout.setVisibility(View.VISIBLE);
+
+        }
+
+
+        date.setText(DateFormat.format("MM/dd/yyyy", unformattedDate));
+        editSubject.setText(currentMemo.getSubjectInput());
+        editMemo.setText(currentMemo.getMemoInput());
+
+    }
+
     private void initNavBar() {
         BottomNavigationView navBar = findViewById(R.id.navigation_bar);
         navBar.setSelectedItemId(0);
@@ -95,21 +152,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             thirdDot.setImageResource(R.drawable.circle_outline);
             linearLayout.setVisibility(View.VISIBLE);
             System.out.println("Low Priority Button Pressed");
-            currentMemo.setCriticality("low");
+            currentMemo.setCriticality(1);
         }
         else if (v.getId() == R.id.mediumPriorityButton){
             firstDot.setImageResource(R.drawable.medium_priority);
             secondDot.setImageResource(R.drawable.medium_priority);
             thirdDot.setImageResource(R.drawable.circle_outline);
             linearLayout.setVisibility(View.VISIBLE);
-            currentMemo.setCriticality("medium");
+            currentMemo.setCriticality(2);
         }
         else if (v.getId() == R.id.highPriorityButton){
             firstDot.setImageResource(R.drawable.high_priority);
             secondDot.setImageResource(R.drawable.high_priority);
             thirdDot.setImageResource(R.drawable.high_priority);
             linearLayout.setVisibility(View.VISIBLE);
-            currentMemo.setCriticality("high");
+            currentMemo.setCriticality(3);
         }
 
     }

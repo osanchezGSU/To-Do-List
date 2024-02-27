@@ -7,14 +7,14 @@ import android.util.Log;
 
 public class ToDoDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "todolist.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String CREATE_TABLE_MEMO =
             "CREATE TABLE memo (" +
                     "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "subjectInput TEXT NOT NULL," +
                     "memoInput TEXT," +
                     "date TEXT," +
-                    "criticality TEXT);";
+                    "criticality INTEGER);";
 
     public ToDoDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

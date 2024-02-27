@@ -6,14 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /*
 Context: Hover over class name for info. It allows us to access resources. It allows us to
@@ -38,20 +42,46 @@ public class ToDoAdapter extends RecyclerView.Adapter {
     public class MemoViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textViewMemo;
+        public TextView textViewDate;
         public Button deleteButton;
+        public ImageView dot1;
+
+        public ImageView dot2;
+        public ImageView dot3;
+
 
         /* @NonNull indicates that the parameter cannot contain a null value or, if it's before
             a method, that the method cannot return a null value  */
         public MemoViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewMemo = itemView.findViewById(R.id.textContactName);
-            deleteButton = itemView.findViewById(R.id.buttonDeleteContact);
+            textViewMemo = itemView.findViewById(R.id.subjectText);
+            textViewDate = itemView.findViewById(R.id.dateText);
+            deleteButton = itemView.findViewById(R.id.buttonDeleteMemo);
+            dot1 = itemView.findViewById(R.id.dot1);
+            dot2 = itemView.findViewById(R.id.dot2);
+            dot3 = itemView.findViewById(R.id.dot3);
+
+
+
 
             // Sets tag so we can identify which item was clicked
             itemView.setTag(this);
 
             // Sets the ViewHolder's OnClickListener to the listener passed from the activity
             itemView.setOnClickListener(mOnItemClickListener);
+        }
+        public ImageView getDot1(){
+            return dot1;
+        }
+        public ImageView getDot2(){
+            return dot2;
+        }
+        public ImageView getDot3(){
+            return dot3;
+        }
+
+        public TextView getTextViewDate() {
+            return textViewDate;
         }
 
         // Will be used by the adapter to set and change the displayed text
@@ -95,6 +125,28 @@ public class ToDoAdapter extends RecyclerView.Adapter {
         // Change value within holder that is passed in
         MemoViewHolder mvh = (MemoViewHolder) holder;
         mvh.getMemoTextView().setText(memoData.get(position).getSubjectInput());
+        Calendar date = memoData.get(position).getDate();
+        mvh.getTextViewDate().setText(DateFormat.format("MM/dd/yyyy", date));
+        Integer criticality = memoData.get(position).getCriticality();
+
+
+        if (criticality == 1){
+           mvh.getDot1().setImageResource(R.drawable.low_priority);
+           mvh.getDot2().setImageResource(R.drawable.circle_outline);
+           mvh.getDot3().setImageResource(R.drawable.circle_outline);
+        }
+        else if (criticality == 2){
+            mvh.getDot1().setImageResource(R.drawable.medium_priority);
+            mvh.getDot2().setImageResource(R.drawable.medium_priority);
+            mvh.getDot3().setImageResource(R.drawable.circle_outline);
+
+        }
+        else if (criticality == 3){
+            mvh.getDot1().setImageResource(R.drawable.high_priority);
+            mvh.getDot2().setImageResource(R.drawable.high_priority);
+            mvh.getDot3().setImageResource(R.drawable.high_priority);
+
+        }
 
         if (isDeleting) {
             mvh.getDeleteButton().setVisibility(View.VISIBLE);

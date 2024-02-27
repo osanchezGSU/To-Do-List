@@ -9,7 +9,7 @@ public class Memo {
     private String subjectInput;
     private String memoInput;
     private Calendar date;
-    private String criticality;
+    private Integer criticality;
 
     public Memo(){
         id = -1;
@@ -50,11 +50,11 @@ public class Memo {
         this.date = date;
     }
 
-    public String getCriticality() {
+    public Integer getCriticality() {
         return criticality;
     }
 
-    public void setCriticality(String criticality) {
+    public void setCriticality(Integer criticality) {
         this.criticality = criticality;
     }
 }

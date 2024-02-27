@@ -85,7 +85,7 @@ public class ToDoDataSource {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
                 newMemo.setDate(calendar);
-                newMemo.setCriticality(cursor.getString(4));
+                newMemo.setCriticality(cursor.getInt(4));
                 memos.add(newMemo);
                 cursor.moveToNext();
             }
@@ -108,7 +108,7 @@ public class ToDoDataSource {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(Long.valueOf(cursor.getString(3)));
             memo.setDate(calendar);
-            memo.setCriticality(cursor.getString(4));
+            memo.setCriticality(cursor.getInt(4));
 
             cursor.close();
         }
