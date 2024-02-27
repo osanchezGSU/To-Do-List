@@ -2,10 +2,14 @@ package com.example.to_dolist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.example.to_dolist.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class CalendarActivity extends AppCompatActivity {
 

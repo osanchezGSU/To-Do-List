@@ -57,6 +57,14 @@ public class DatePickerDialog extends DialogFragment {
             }
         });
 
+        Button cancelButton = view.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().dismiss();
+            }
+        });
+
         return view;
     }
 

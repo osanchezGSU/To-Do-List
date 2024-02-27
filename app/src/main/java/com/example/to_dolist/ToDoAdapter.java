@@ -44,8 +44,8 @@ public class ToDoAdapter extends RecyclerView.Adapter {
             a method, that the method cannot return a null value  */
         public MemoViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewMemo = itemView.findViewById(R.id.textSubjectInput);
-            deleteButton = itemView.findViewById(R.id.buttonDeleteMemo);
+            textViewMemo = itemView.findViewById(R.id.textContactName);
+            deleteButton = itemView.findViewById(R.id.buttonDeleteContact);
 
             // Sets tag so we can identify which item was clicked
             itemView.setTag(this);
@@ -81,7 +81,7 @@ public class ToDoAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_list_item,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,
                 parent, false);
         return new MemoViewHolder(v);
     }
