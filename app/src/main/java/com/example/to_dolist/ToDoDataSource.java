@@ -42,7 +42,7 @@ public class ToDoDataSource {
     public boolean updateMemo(Memo c) {
         boolean didSucceed = false;
         try{
-            long rowId = c.getId();
+            int rowId = c.getId();
             ContentValues updateValues = new ContentValues();
             updateValues.put("subjectInput", c.getSubjectInput());
             updateValues.put("memoInput", c.getMemoInput());
@@ -55,7 +55,7 @@ public class ToDoDataSource {
         }
         return didSucceed;
     }
-    public int getLastMemoId(){
+    public int getLastId(){
         int lastId;
         try{
             String query = "Select MAX (_id) from memo";
@@ -96,9 +96,9 @@ public class ToDoDataSource {
         return memos;
     }
 
-    public Memo getSpecificMemo(int memoId) {
+    public Memo getSpecificMemo(int id) {
         Memo memo = new Memo();
-        String query = "SELECT * FROM memo WHERE _id =" + memoId;
+        String query = "SELECT * FROM memo WHERE _id =" + id;
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -115,10 +115,10 @@ public class ToDoDataSource {
         return memo;
     }
 
-    public boolean deleteMemo(int memoId) {
+    public boolean deleteMemo(int id) {
         boolean didDelete = false;
         try {
-            didDelete = database.delete("memo", "_id=" + memoId, null) > 0;
+            didDelete = database.delete("memo", "_id=" + id, null) > 0;
         } catch (Exception e) {
         }
         return didDelete;

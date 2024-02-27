@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         navBar.setSelectedItemId(R.id.settings_activity);
         navBar.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.list_activity) {
-                replaceActivity(ListActivty.class);
+                replaceActivity(ListActivity.class);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }

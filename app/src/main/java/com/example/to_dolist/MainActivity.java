@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navBar.setSelectedItemId(0);
         navBar.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.list_activity){
-                replaceActivity(ListActivty.class);
+                replaceActivity(ListActivity.class);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
