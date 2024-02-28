@@ -35,16 +35,6 @@ public class SettingsActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-            if (item.getItemId() == R.id.calendar_activity) {
-                replaceActivity(CalendarActivity.class);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-            if (item.getItemId() == R.id.settings_activity) {
-                replaceActivity(SettingsActivity.class);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
             return true;
         });
     }

@@ -116,11 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
-            if (item.getItemId() == R.id.calendar_activity){
-                replaceActivity(CalendarActivity.class);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
             if (item.getItemId() == R.id.settings_activity) {
                 replaceActivity(SettingsActivity.class);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -275,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Button Pressed", Toast.LENGTH_LONG).show();
+
                 boolean wasSuccessful;
                 ToDoDataSource ds = new ToDoDataSource(MainActivity.this);
                 try {
@@ -292,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     wasSuccessful = false;
                 }
                 if (wasSuccessful) {
+                    Toast.makeText(MainActivity.this, "Memo Saved Successfully!", Toast.LENGTH_LONG).show();
                     ToggleButton editToggle = findViewById(R.id.editToggleButton);
                     editToggle.toggle();
                     setForEditing(false);
